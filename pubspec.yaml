@@ -28,6 +28,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter_svg: ^0.22.0
   pretty_dio_logger: ^1.1.1
   path_provider: ^2.0.11
   hydrated_bloc: ^8.1.0

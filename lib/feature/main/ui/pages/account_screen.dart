@@ -1,9 +1,5 @@
-import 'dart:io';
-
 import 'package:client_id/feature/main/ui/components/account_post_space.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../../auth/domain/entities/user_entity/user_entity.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -20,21 +16,43 @@ class AccountScreen extends StatelessWidget {
             Center(
               child: Padding(
                 padding: const EdgeInsets.only(top: 30.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Stack(
                   children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('lib/icons/avatar_test.png'),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('lib/icons/avatar_test.png'),
+                          ),
                         ),
                       ),
-                    )
-                    //  some numbers: post, followers
+                    ),
+                    // TODO change ICON to ... grey
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconButton(
+                          onPressed: () {
+                            // Действия при нажатии на кнопку
+                          },
+                          icon: Icon(Icons.menu_sharp, color: Colors.grey[700],),
+                          iconSize: 30.0,
+                          padding: const EdgeInsets.all(8.0),
+                          color: Theme.of(context).colorScheme.background,  // цвет текста
+                          splashRadius: 10.0, // радиус круга нажатия
+                          constraints: const BoxConstraints(
+                            maxHeight: 40.0,
+                            maxWidth: 40.0,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

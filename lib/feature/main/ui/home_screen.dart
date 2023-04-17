@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     _children = [
       UserHomeScreen(userEntity: userEntity),
       FriendsScreen(userEntity: userEntity),
-      AccountScreen(userEntity: userEntity),
+      const AccountScreen(),
     ];
   } // create constructor
 

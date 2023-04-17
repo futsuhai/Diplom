@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 abstract class AppApi {
   Future<dynamic> singUp({
     required String password,
@@ -25,4 +27,6 @@ abstract class AppApi {
   Future<dynamic> refreshToken({String? refreshToken});
 
   Future<dynamic> request(String path);
+
+  Future<dynamic> fetch(RequestOptions requestOptions);
 }

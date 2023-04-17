@@ -10,6 +10,7 @@ part "auth_state.dart";
 part "auth_cubit.freezed.dart";
 
 part "auth_cubit.g.dart";
+
 @Singleton()
 class AuthCubit extends HydratedCubit<AuthState> {
   AuthCubit(this.authRepository) : super(AuthState.notAuthorized());
@@ -60,6 +61,25 @@ class AuthCubit extends HydratedCubit<AuthState> {
   Future<void> getProfile() async {
     try {
       final UserEntity newUserEntity = await authRepository.getProfile();
+      emit(state.maybeWhen(
+        orElse: () => state,
+        authorized: (userEntity) => AuthState.authorized(userEntity.copyWith(
+            email: newUserEntity.email, username: newUserEntity.username)),
+      ));
+    } catch (error, st) {
+      addError(error, st);
+    }
+  }
+
+  // TODO description
+  Future<void> userUpdate({String? username, String? email}) async {
+    try {
+      final bool isEmptyUsername = username?.trim().isEmpty == true;
+      final bool isEmptyEmail = email?.trim().isEmpty == true;
+      final UserEntity newUserEntity = await authRepository.userUpdate(
+        username: isEmptyUsername ? null : username,
+        email: isEmptyEmail ? null : email,
+      );
       emit(state.maybeWhen(
         orElse: () => state,
         authorized: (userEntity) => AuthState.authorized(userEntity.copyWith(

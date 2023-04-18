@@ -1,3 +1,6 @@
+import 'package:client_id/app/domain/error_entity/error_entity.dart';
+import 'package:client_id/app/ui/app_loader.dart';
+import 'package:client_id/app/ui/components/app_snackBar.dart';
 import 'package:client_id/app/ui/components/app_text_field.dart';
 import 'package:client_id/feature/auth/domain/auth_state/auth_cubit.dart';
 import 'package:client_id/feature/main/ui/components/account_post_space.dart';
@@ -12,10 +15,25 @@ class AccountScreen extends StatelessWidget {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        body: BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+        body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
+          state.whenOrNull(authorized: (userEntity) {
+            if (userEntity.userState?.hasData == true) {
+              AppSnackBar.showSnackBarWithMessage(
+                  context, userEntity.userState?.data);
+            }
+            if (userEntity.userState?.hasError == true) {
+              AppSnackBar.showSnackBarWithError(context,
+                  ErrorEntity.fromException(userEntity.userState?.error));
+            }
+          });
+        }, builder: (context, state) {
           final userEntity = state.whenOrNull(
             authorized: (userEntity) => userEntity,
           );
+          if (userEntity?.userState?.connectionState ==
+              ConnectionState.waiting) {
+            return const AppLoader();
+          }
           return Column(
             children: [
               Center(
@@ -46,10 +64,37 @@ class AccountScreen extends StatelessWidget {
                             onPressed: () {
                               showDialog(
                                   context: context,
-                                  builder: (context) => _UserUpdateData());
+                                  builder: (context) =>
+                                      const _UserUpdateData());
                             },
                             icon: Icon(
                               Icons.edit,
+                              color: Colors.grey[700],
+                            ),
+                            iconSize: 30.0,
+                            padding: const EdgeInsets.all(8.0),
+                            color: Theme.of(context).colorScheme.background,
+                            splashRadius: 10.0,
+                            constraints: const BoxConstraints(
+                              maxHeight: 40.0,
+                              maxWidth: 40.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      const _UserUpdatePasswordDialog());
+                            },
+                            icon: Icon(
+                              Icons.password,
                               color: Colors.grey[700],
                             ),
                             iconSize: 30.0,
@@ -119,6 +164,7 @@ class AccountScreen extends StatelessWidget {
   }
 }
 
+// Update user Data
 class _UserUpdateData extends StatefulWidget {
   const _UserUpdateData({Key? key}) : super(key: key);
 
@@ -159,9 +205,61 @@ class _UserUpdateDataState extends State<_UserUpdateData> {
               const SizedBox(height: 16),
               ElevatedButton(
                   onPressed: () {
+                    Navigator.pop(context);
                     context.read<AuthCubit>().userUpdate(
                         email: emailController.text,
                         username: usernameController.text);
+                  },
+                  child: const Text("Save")),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
+// Update user Password
+class _UserUpdatePasswordDialog extends StatefulWidget {
+  const _UserUpdatePasswordDialog({Key? key}) : super(key: key);
+
+  @override
+  State<_UserUpdatePasswordDialog> createState() =>
+      _UserUpdatePasswordDialogState();
+}
+
+class _UserUpdatePasswordDialogState extends State<_UserUpdatePasswordDialog> {
+  final newController = TextEditingController();
+  final oldController = TextEditingController();
+
+  @override
+  void dispose() {
+    newController.dispose();
+    oldController.dispose();
+    super.dispose();
+  }
+
+  // TODO description
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: Column(
+            children: [
+              AppTextField(
+                  controller: oldController, labelText: "Enter old password"),
+              const SizedBox(height: 16),
+              AppTextField(
+                  controller: newController, labelText: "Enter new password"),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.read<AuthCubit>().passwordUpdate(
+                        newPassword: newController.text,
+                        oldPassword: oldController.text);
                   },
                   child: const Text("Save")),
             ],

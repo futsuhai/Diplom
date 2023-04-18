@@ -1,5 +1,7 @@
+import 'package:client_id/app/domain/error_entity/error_entity.dart';
 import 'package:client_id/feature/auth/domain/auth_repository.dart';
 import 'package:client_id/feature/auth/domain/entities/user_entity/user_entity.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -60,20 +62,25 @@ class AuthCubit extends HydratedCubit<AuthState> {
 
   Future<void> getProfile() async {
     try {
+      _updateUserState(const AsyncSnapshot.waiting());
       final UserEntity newUserEntity = await authRepository.getProfile();
       emit(state.maybeWhen(
         orElse: () => state,
         authorized: (userEntity) => AuthState.authorized(userEntity.copyWith(
             email: newUserEntity.email, username: newUserEntity.username)),
       ));
-    } catch (error, st) {
-      addError(error, st);
+      _updateUserState(const AsyncSnapshot.withData(
+          ConnectionState.done, "Complete get data"));
+    } catch (error) {
+      _updateUserState(AsyncSnapshot.withError(ConnectionState.done, error));
     }
   }
 
   // TODO description
   Future<void> userUpdate({String? username, String? email}) async {
     try {
+      _updateUserState(const AsyncSnapshot.waiting());
+      await Future.delayed(const Duration(seconds: 1));
       final bool isEmptyUsername = username?.trim().isEmpty == true;
       final bool isEmptyEmail = email?.trim().isEmpty == true;
       final UserEntity newUserEntity = await authRepository.userUpdate(
@@ -85,8 +92,28 @@ class AuthCubit extends HydratedCubit<AuthState> {
         authorized: (userEntity) => AuthState.authorized(userEntity.copyWith(
             email: newUserEntity.email, username: newUserEntity.username)),
       ));
-    } catch (error, st) {
-      addError(error, st);
+      _updateUserState(const AsyncSnapshot.withData(
+          ConnectionState.done, "Complete update data"));
+    } catch (error) {
+      _updateUserState(AsyncSnapshot.withError(ConnectionState.done, error));
+    }
+  }
+
+  Future<void> passwordUpdate(
+      {required String oldPassword, required String newPassword}) async {
+    try {
+      _updateUserState(const AsyncSnapshot.waiting());
+      await Future.delayed(const Duration(seconds: 1));
+      if (newPassword.trim().isEmpty == true) {
+        throw ErrorEntity(message: "New password is null!");
+      }
+      final message = await authRepository.passwordUpdate(
+          newPassword: newPassword, oldPassword: oldPassword);
+
+      _updateUserState(AsyncSnapshot.withData(
+          ConnectionState.done, message));
+    } catch (error) {
+      _updateUserState(AsyncSnapshot.withError(ConnectionState.done, error));
     }
   }
 
@@ -99,6 +126,15 @@ class AuthCubit extends HydratedCubit<AuthState> {
     return state.whenOrNull(
       authorized: (userEntity) => AuthState.authorized(userEntity),
     );
+  }
+
+  void _updateUserState(AsyncSnapshot asyncSnapshot) {
+    emit(state.maybeWhen(
+        orElse: () => state,
+        authorized: (userEntity) {
+          return AuthState.authorized(
+              userEntity.copyWith(userState: asyncSnapshot));
+        }));
   }
 
   @override

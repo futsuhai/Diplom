@@ -53,6 +53,7 @@ class AccountScreen extends StatelessWidget {
                               image: AssetImage('lib/icons/avatar_test.png'),
                             ),
                           ),
+
                         ),
                       ),
                     ],

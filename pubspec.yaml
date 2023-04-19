@@ -76,9 +76,13 @@ flutter:
     - lib/icons/apple.png
     - lib/icons/google.png
     - lib/icons/avatar_test.png
+    - lib/icons/ann.png
     - lib/assets/post1.png
     - lib/assets/post2.png
     - lib/assets/post3.png
+    - lib/assets/post4.png
+    - lib/assets/eee.png
+    - lib/icons/eee_ava.png
 
 
 

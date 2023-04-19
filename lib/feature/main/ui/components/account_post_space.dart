@@ -1,8 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AccountPostSpace extends StatelessWidget {
-  final List<String> userPosts = [];
+  final List<String> userPosts = [
+    "lib/assets/post4.png",
+    "lib/assets/post1.png",
+    "lib/assets/post2.png",
+    "lib/assets/post3.png",
+  ];
 
   @override
   Widget build(BuildContext context) {

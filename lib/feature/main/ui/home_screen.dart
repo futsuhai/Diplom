@@ -1,5 +1,6 @@
 import 'package:client_id/feature/main/ui/pages/account_screen.dart';
-import 'package:client_id/feature/main/ui/pages/friends_screen.dart';
+import 'package:client_id/feature/main/ui/pages/dialog_screen.dart';
+import 'package:client_id/feature/main/ui/pages/map_screen.dart';
 import 'package:client_id/feature/main/ui/pages/user_home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +22,9 @@ class _HomePageState extends State<HomePage> {
 
   _HomePageState(this.userEntity) {
     _children = [
-      UserHomeScreen(userEntity: userEntity),
-      FriendsScreen(userEntity: userEntity),
+      UserHomeScreen(),
+      DialogScreen(),
+      const MapScreen(),
       const AccountScreen(),
     ];
   } // create constructor
@@ -38,14 +40,18 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.grey[900],
         currentIndex: _selectedIndex,
         onTap: _navigatorBottomNavBar,
         type: BottomNavigationBarType.fixed,
+        unselectedItemColor: Colors.grey[200],
+        selectedItemColor: Colors.teal.shade400,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "home"),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: "Dialogs"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.accessibility), label: "friends"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "account"),
+              icon: Icon(Icons.map), label: "Map"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
         ],
       ),
     );

@@ -122,33 +122,33 @@ class AccountScreen extends StatelessWidget {
                       child: Text(
                         userEntity?.username ?? "null",
                         style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
                       ),
                     ),
                     const Text(
                       "SUPER SUPER SUPER Mega Dark Market!!!",
+                      style: TextStyle(color: Colors.black),
                     ),
                   ],
                 ),
               ),
               //button edit profile
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(
-                    child: SizedBox(
-                      width: 200,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 6),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: const Center(child: Text("Edit Profile")),
-                      ),
-                    ),
-                  )
-                ],
+              ElevatedButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) =>
+                      const _UserProfileUpdate());
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    side: const BorderSide(color: Colors.grey),
+                  ),
+                ),
+                child: const Text('Edit Profile', style: TextStyle(color: Colors.black),),
               ),
               Expanded(
                   child: TabBarView(
@@ -262,6 +262,82 @@ class _UserUpdatePasswordDialogState extends State<_UserUpdatePasswordDialog> {
                         oldPassword: oldController.text);
                   },
                   child: const Text("Save")),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+
+// User profile update
+class _UserProfileUpdate extends StatefulWidget {
+  const _UserProfileUpdate({Key? key}) : super(key: key);
+
+  @override
+  State<_UserProfileUpdate> createState() =>
+      _UserProfileUpdateState();
+}
+
+class _UserProfileUpdateState extends State<_UserProfileUpdate> {
+  final newController = TextEditingController();
+  final oldController = TextEditingController();
+  final usernameController = TextEditingController();
+  final descriptionController = TextEditingController();
+
+  @override
+  void dispose() {
+    newController.dispose();
+    oldController.dispose();
+    usernameController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  // TODO description
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: Column(
+            children: [
+              // User profile update
+              const Text("Do you want to change your profile?" ),
+              const SizedBox(height: 8),
+              AppTextField(
+                  controller: usernameController, labelText: "Enter new username"),
+              const SizedBox(height: 16),
+              AppTextField(
+                  controller: descriptionController, labelText: "Enter new profile description"),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.read<AuthCubit>().userUpdate(
+                        username: usernameController.text
+                            // description
+                    );
+                  },
+                  child: const Text("Save edited profile")),
+              // User password update
+              const Text("Do you want to change your password?"),
+              const SizedBox(height: 8),
+              AppTextField(
+                  controller: oldController, labelText: "Enter old password"),
+              const SizedBox(height: 16),
+              AppTextField(
+                  controller: newController, labelText: "Enter new password"),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                    context.read<AuthCubit>().passwordUpdate(
+                        newPassword: newController.text,
+                        oldPassword: oldController.text);
+                  },
+                  child: const Text("Save edited password")),
             ],
           ),
         )

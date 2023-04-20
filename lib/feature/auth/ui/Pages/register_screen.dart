@@ -31,7 +31,7 @@ class RegisterScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 16),
                   const Text(
                     "MeetSocial",
                     style: TextStyle(
@@ -39,7 +39,7 @@ class RegisterScreen extends StatelessWidget {
                       fontSize: 50,
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 18),
                   Text(
                     "Let's create an account for you!",
                     style: TextStyle(
@@ -47,7 +47,7 @@ class RegisterScreen extends StatelessWidget {
                       fontSize: 15,
                     ),
                   ),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 24),
                   AppTextField(
                     controller: controllerLogin,
                     labelText: "Login",
@@ -133,18 +133,17 @@ class RegisterScreen extends StatelessWidget {
                         width: 4,
                       ),
                       // TODO edit to button
-                      ElevatedButton(
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => LoginScreen(),
                           ));
                         },
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white),
                         child: const Text(
                           "Login now",
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       )

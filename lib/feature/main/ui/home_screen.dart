@@ -47,7 +47,7 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.grey[200],
         selectedItemColor: Colors.teal.shade400,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: "Dialogs"),
           BottomNavigationBarItem(
               icon: Icon(Icons.map), label: "Map"),

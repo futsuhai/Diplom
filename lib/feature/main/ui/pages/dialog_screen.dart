@@ -18,6 +18,11 @@ class DialogScreen extends StatelessWidget{
     "lib/assets/post4.png",
     "lib/assets/pos65.png",
     "lib/assets/post7.png",
+    "lib/assets/post7.png",
+    "lib/assets/post7.png",
+    "lib/assets/post7.png",
+    "lib/assets/post7.png",
+    "lib/assets/post7.png",
   ];
 
   @override
@@ -57,6 +62,7 @@ class DialogScreen extends StatelessWidget{
                       children: [
                         //Header post
                         Row(
+
                           children: [
                             Container(
                               padding: const EdgeInsets.all(14),
@@ -70,12 +76,28 @@ class DialogScreen extends StatelessWidget{
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    userEntity?.username ?? "null",
+                                  Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Text(
+                                      userEntity?.username ?? "null",
+                                      style: const TextStyle(color: Colors.black),
+                                    ),
                                   ),
                                   const Text(
                                     "Test message",
+                                    style: TextStyle(color: Colors.black),
                                   ),
+                                ],
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(right: 16.0),
+                              child: Column(
+                                children: [
+                                   Text(
+                                     "16:35",
+                                     style: TextStyle(fontSize: 12),
+                                   ),
                                 ],
                               ),
                             ),

@@ -121,21 +121,20 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(
                       width: 4,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
+                    GestureDetector(
+                      onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => RegisterScreen(),
                         ));
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white),
                       child: const Text(
                         "Register now",
                         style: TextStyle(
-                          color: Colors.blue,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    )
+                    ),
                   ],
                 )
               ],

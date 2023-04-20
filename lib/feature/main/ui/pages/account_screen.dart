@@ -53,7 +53,6 @@ class AccountScreen extends StatelessWidget {
                               image: AssetImage('lib/icons/avatar_test.png'),
                             ),
                           ),
-
                         ),
                       ),
                     ],
@@ -70,7 +69,9 @@ class AccountScreen extends StatelessWidget {
                       child: Text(
                         userEntity?.username ?? "null",
                         style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
                       ),
                     ),
                     const Text(
@@ -85,18 +86,21 @@ class AccountScreen extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                       context: context,
-                      builder: (context) =>
-                      const _UserProfileUpdate());
+                      builder: (context) => const _UserProfileUpdate());
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  backgroundColor: Colors.black,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                     side: const BorderSide(color: Colors.grey),
                   ),
                 ),
-                child: const Text('Edit Profile', style: TextStyle(color: Colors.black),),
+                child: const Text(
+                  'Edit Profile',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
               Expanded(
                   child: TabBarView(
@@ -117,8 +121,7 @@ class _UserProfileUpdate extends StatefulWidget {
   const _UserProfileUpdate({Key? key}) : super(key: key);
 
   @override
-  State<_UserProfileUpdate> createState() =>
-      _UserProfileUpdateState();
+  State<_UserProfileUpdate> createState() => _UserProfileUpdateState();
 }
 
 class _UserProfileUpdateState extends State<_UserProfileUpdate> {
@@ -146,24 +149,41 @@ class _UserProfileUpdateState extends State<_UserProfileUpdate> {
           child: Column(
             children: [
               // User profile update
-              const Text("Do you want to change your profile?" ),
+              const Text("Do you want to change your profile?"),
               const SizedBox(height: 8),
               AppTextField(
-                  controller: usernameController, labelText: "Enter new username"),
+                  controller: usernameController,
+                  labelText: "Enter new username"),
               const SizedBox(height: 16),
               AppTextField(
-                  controller: descriptionController, labelText: "Enter new profile description"),
+                  controller: descriptionController,
+                  labelText: "Enter new profile description"),
               const SizedBox(height: 16),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    context.read<AuthCubit>().userUpdate(
-                        username: usernameController.text
-                            // description
-                    );
-                  },
-                  child: const Text("Save edited profile")),
+              SizedBox(
+                width: 200,
+                height: 40,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      context
+                          .read<AuthCubit>()
+                          .userUpdate(username: usernameController.text
+                              // description
+                              );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                    ),
+                    child: const Text(
+                      "Save edited profile",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
               // User password update
+              const SizedBox(height: 16),
               const Text("Do you want to change your password?"),
               const SizedBox(height: 8),
               AppTextField(
@@ -172,14 +192,27 @@ class _UserProfileUpdateState extends State<_UserProfileUpdate> {
               AppTextField(
                   controller: newController, labelText: "Enter new password"),
               const SizedBox(height: 16),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    context.read<AuthCubit>().passwordUpdate(
-                        newPassword: newController.text,
-                        oldPassword: oldController.text);
-                  },
-                  child: const Text("Save edited password")),
+              SizedBox(
+                width: 200,
+                height: 40,
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      context.read<AuthCubit>().passwordUpdate(
+                          newPassword: newController.text,
+                          oldPassword: oldController.text);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                    ),
+                    child: const Text(
+                      "Save edited password",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    )),
+              ),
             ],
           ),
         )

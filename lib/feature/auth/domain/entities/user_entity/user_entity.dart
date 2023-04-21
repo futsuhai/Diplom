@@ -10,6 +10,7 @@ class UserEntity with _$UserEntity {
     required String email,
     required String username,
     required String id,
+    required String description,
     String? accessToken,
     String? refreshToken,
     @JsonKey(ignore: true) AsyncSnapshot? userState,

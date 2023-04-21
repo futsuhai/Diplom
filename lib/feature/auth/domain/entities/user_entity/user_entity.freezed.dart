@@ -23,6 +23,7 @@ mixin _$UserEntity {
   String get email => throw _privateConstructorUsedError;
   String get username => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
   String? get refreshToken => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -44,6 +45,7 @@ abstract class $UserEntityCopyWith<$Res> {
       {String email,
       String username,
       String id,
+      String description,
       String? accessToken,
       String? refreshToken,
       @JsonKey(ignore: true) AsyncSnapshot<dynamic>? userState});
@@ -65,6 +67,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? email = null,
     Object? username = null,
     Object? id = null,
+    Object? description = null,
     Object? accessToken = freezed,
     Object? refreshToken = freezed,
     Object? userState = freezed,
@@ -81,6 +84,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
       accessToken: freezed == accessToken
           ? _value.accessToken
@@ -110,6 +117,7 @@ abstract class _$$_UserEntityCopyWith<$Res>
       {String email,
       String username,
       String id,
+      String description,
       String? accessToken,
       String? refreshToken,
       @JsonKey(ignore: true) AsyncSnapshot<dynamic>? userState});
@@ -129,6 +137,7 @@ class __$$_UserEntityCopyWithImpl<$Res>
     Object? email = null,
     Object? username = null,
     Object? id = null,
+    Object? description = null,
     Object? accessToken = freezed,
     Object? refreshToken = freezed,
     Object? userState = freezed,
@@ -145,6 +154,10 @@ class __$$_UserEntityCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: null == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String,
       accessToken: freezed == accessToken
           ? _value.accessToken
@@ -169,6 +182,7 @@ class _$_UserEntity implements _UserEntity {
       {required this.email,
       required this.username,
       required this.id,
+      required this.description,
       this.accessToken,
       this.refreshToken,
       @JsonKey(ignore: true) this.userState});
@@ -183,6 +197,8 @@ class _$_UserEntity implements _UserEntity {
   @override
   final String id;
   @override
+  final String description;
+  @override
   final String? accessToken;
   @override
   final String? refreshToken;
@@ -192,7 +208,7 @@ class _$_UserEntity implements _UserEntity {
 
   @override
   String toString() {
-    return 'UserEntity(email: $email, username: $username, id: $id, accessToken: $accessToken, refreshToken: $refreshToken, userState: $userState)';
+    return 'UserEntity(email: $email, username: $username, id: $id, description: $description, accessToken: $accessToken, refreshToken: $refreshToken, userState: $userState)';
   }
 
   @override
@@ -204,6 +220,8 @@ class _$_UserEntity implements _UserEntity {
             (identical(other.username, username) ||
                 other.username == username) &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.accessToken, accessToken) ||
                 other.accessToken == accessToken) &&
             (identical(other.refreshToken, refreshToken) ||
@@ -214,8 +232,8 @@ class _$_UserEntity implements _UserEntity {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, email, username, id, accessToken, refreshToken, userState);
+  int get hashCode => Object.hash(runtimeType, email, username, id, description,
+      accessToken, refreshToken, userState);
 
   @JsonKey(ignore: true)
   @override
@@ -236,6 +254,7 @@ abstract class _UserEntity implements UserEntity {
           {required final String email,
           required final String username,
           required final String id,
+          required final String description,
           final String? accessToken,
           final String? refreshToken,
           @JsonKey(ignore: true) final AsyncSnapshot<dynamic>? userState}) =
@@ -250,6 +269,8 @@ abstract class _UserEntity implements UserEntity {
   String get username;
   @override
   String get id;
+  @override
+  String get description;
   @override
   String? get accessToken;
   @override

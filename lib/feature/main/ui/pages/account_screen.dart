@@ -74,9 +74,9 @@ class AccountScreen extends StatelessWidget {
                             color: Colors.black),
                       ),
                     ),
-                    const Text(
-                      "SUPER SUPER SUPER Mega Dark Market!!!",
-                      style: TextStyle(color: Colors.black),
+                    Text(
+                      userEntity?.description ?? "null",
+                      style: const TextStyle(color: Colors.black),
                     ),
                   ],
                 ),
@@ -165,11 +165,10 @@ class _UserProfileUpdateState extends State<_UserProfileUpdate> {
                 child: ElevatedButton(
                     onPressed: () {
                       Navigator.pop(context);
-                      context
-                          .read<AuthCubit>()
-                          .userUpdate(username: usernameController.text
-                              // description
-                              );
+                      context.read<AuthCubit>().userUpdate(
+                            username: usernameController.text,
+                            description: descriptionController.text,
+                          );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,

@@ -17,6 +17,7 @@ abstract class AppApi {
   Future<dynamic> userUpdate({
     String? username,
     String? email,
+    String? description,
   });
 
   Future<dynamic> passwordUpdate({

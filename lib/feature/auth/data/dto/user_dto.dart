@@ -8,6 +8,7 @@ class UserDto {
   final dynamic id;
   final dynamic username;
   final dynamic email;
+  final dynamic description;
   final dynamic accsessToken;
   final dynamic refreshToken;
 
@@ -15,6 +16,7 @@ class UserDto {
     this.id,
     this.username,
     this.email,
+    this.description,
     this.accsessToken,
     this.refreshToken,
   });
@@ -27,6 +29,7 @@ class UserDto {
   UserEntity toEntity() {
     return UserEntity(
         email: email.toString(),
+        description: description.toString(),
         username: username.toString(),
         id: id.toString(),
         accessToken: accsessToken.toString(),

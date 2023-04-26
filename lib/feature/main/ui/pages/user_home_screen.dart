@@ -91,10 +91,10 @@ class UserHomeScreen extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: const EdgeInsets.all(10),
-                                  child: const CircleAvatar(
+                                  child:  CircleAvatar(
                                     radius: 20,
                                     backgroundImage:
-                                        AssetImage('lib/icons/ann.png'),
+                                    NetworkImage(userEntity?.image ?? "https://firebasestorage.googleapis.com/v0/b/url-image-storage.appspot.com/o/image.jpg?alt=media&token=cc507dc3-982b-437a-8720-d09b31ab7fc7"),
                                   ),
                                 ),
                                 Text(

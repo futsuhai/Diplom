@@ -11,6 +11,7 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) => UserDto(
       username: json['username'],
       email: json['email'],
       description: json['description'],
+      image: json['image'],
       accsessToken: json['accsessToken'],
       refreshToken: json['refreshToken'],
     );
@@ -20,6 +21,7 @@ Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
       'username': instance.username,
       'email': instance.email,
       'description': instance.description,
+      'image': instance.image,
       'accsessToken': instance.accsessToken,
       'refreshToken': instance.refreshToken,
     };

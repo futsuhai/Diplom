@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     _children = [
       UserHomeScreen(),
       DialogScreen(),
-      const MapScreen(),
+      MapScreen(),
       const AccountScreen(),
     ];
   } // create constructor

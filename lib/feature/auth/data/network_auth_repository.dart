@@ -70,10 +70,10 @@ class NetworkAuthRepository implements AuthRepository {
 
   @override
   Future<UserEntity> userUpdate(
-      {String? username, String? email, String? description}) async {
+      {String? username, String? email, String? description, String? image}) async {
     try {
       final response = await api.userUpdate(
-          username: username, email: email, description: description);
+          username: username, email: email, description: description, image: image);
       return UserDto.fromJson(response.data["data"]).toEntity();
     } catch (_) {
       rethrow;

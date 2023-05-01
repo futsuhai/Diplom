@@ -15,7 +15,8 @@ abstract class AuthRepository{
   Future<dynamic> userUpdate({
     String? username,
     String? email,
-    String? description
+    String? description,
+    String? image
   });
 
   Future<dynamic> passwordUpdate({

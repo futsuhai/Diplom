@@ -150,11 +150,14 @@ class _ImageProfileUpdateState extends State<_ImageProfileUpdate> {
 
   Future<void> _uploadImageToDatabase() async {
     final FirebaseStorage storage = FirebaseStorage.instance;
-    final Reference ref = storage.ref().child('image.jpg');
+    final Reference ref = storage.ref().child('${_imageFile?.path.split('/').last}');
     final TaskSnapshot task = await ref.putFile(_imageFile!);
     final String downloadUrl = await ref.getDownloadURL();
     // do request to db
     print(downloadUrl);
+    context.read<AuthCubit>().userUpdate(
+      image: downloadUrl
+    );
     Navigator.pop(context);
   }
 

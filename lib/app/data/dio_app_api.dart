@@ -75,11 +75,12 @@ class DioAppApi implements AppApi {
 
   @override
   Future<Response> userUpdate(
-      {String? username, String? email, String? description}) {
+      {String? username, String? email, String? description, String? image}) {
     return dio.post("/auth/user", data: {
       "username": username,
       "email": email,
-      "description": description
+      "description": description,
+      "image": image
     });
   }
 

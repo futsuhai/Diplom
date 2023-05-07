@@ -1,7 +1,9 @@
-import 'package:client_id/feature/main/ui/pages/account_screen.dart';
-import 'package:client_id/feature/main/ui/pages/dialog_screen.dart';
-import 'package:client_id/feature/main/ui/pages/map_screen.dart';
-import 'package:client_id/feature/main/ui/pages/user_home_screen.dart';
+
+import 'package:client_id/feature/main/ui/pages/DialogPage/dialog_screen.dart';
+import 'package:client_id/feature/main/ui/pages/MapPage/map_screen.dart';
+import 'package:client_id/feature/main/ui/pages/ProlifePage/profile_page.dart';
+import 'package:client_id/feature/main/ui/pages/HomePage/user_home_screen.dart';
+import 'package:client_id/feature/main/ui/pages/test.dart';
 import 'package:flutter/material.dart';
 
 import '../../auth/domain/entities/user_entity/user_entity.dart';
@@ -25,7 +27,8 @@ class _HomePageState extends State<HomePage> {
       UserHomeScreen(),
       DialogScreen(),
       MapScreen(),
-      const AccountScreen(),
+       ProfileScreen(),
+      const Test(),
     ];
   } // create constructor
 
@@ -40,7 +43,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey[900],
+        backgroundColor: const Color.fromRGBO(35, 34, 32, 1),
         currentIndex: _selectedIndex,
         onTap: _navigatorBottomNavBar,
         type: BottomNavigationBarType.fixed,
@@ -51,7 +54,8 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: "Dialogs"),
           BottomNavigationBarItem(
               icon: Icon(Icons.map), label: "Map"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Account"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Test"),
         ],
       ),
     );

@@ -4,7 +4,7 @@ import 'package:client_id/feature/auth/ui/Pages/login_screen.dart';
 import 'package:client_id/feature/main/ui/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../feature/main/ui/pages/user_home_screen.dart';
+import '../../feature/main/ui/pages/HomePage/user_home_screen.dart';
 
 class RootScreen extends StatelessWidget {
   const RootScreen({Key? key}) : super(key: key);

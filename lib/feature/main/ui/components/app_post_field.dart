@@ -21,12 +21,13 @@ class AppPostField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
+        labelStyle: const TextStyle(color: Color.fromRGBO(140, 140, 139, 1)),
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.white),
+            borderSide: const BorderSide(color: Color.fromRGBO(35, 34, 32, 1)),
             borderRadius: BorderRadius.circular(14)),
         focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade400)),
-        fillColor: Colors.grey.shade200,
+        fillColor: const Color.fromRGBO(35, 34, 32, 1),
         filled: true
       ),
     );

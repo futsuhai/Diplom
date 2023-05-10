@@ -33,4 +33,8 @@ abstract class AppApi {
   Future<dynamic> fetch(RequestOptions requestOptions);
 
   Future<dynamic> fetchPosts();
+
+  Future<dynamic> createPost({String? content, String? image});
+
+  Future<dynamic> deletePost(String id);
 }

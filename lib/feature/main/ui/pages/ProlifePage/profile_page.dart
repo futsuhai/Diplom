@@ -7,13 +7,11 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../../app/domain/error_entity/error_entity.dart';
 import '../../../../../app/ui/app_loader.dart';
 import '../../../../../app/ui/components/app_snackBar.dart';
-import '../../../../../app/ui/components/app_text_field.dart';
 import '../../../../auth/domain/auth_state/auth_cubit.dart';
 import '../../../../auth/domain/entities/user_entity/user_entity.dart';
-import '../../../../posts/domain/entity/post/ui/post_list.dart';
-import '../../components/app_post_field.dart';
-import 'components/app_text_field_profile.dart';
-import 'components/postFieldProfile.dart';
+import '../../../../posts/domain/entity/post/ui/post_list_profile.dart';
+import 'components/create_post_container.dart';
+import 'components/setting_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
@@ -21,6 +19,10 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          title: const Text("Profile"),
+          backgroundColor: const Color.fromRGBO(14, 14, 14, 1),
+        ),
         backgroundColor: const Color.fromRGBO(14, 14, 14, 1),
         body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
           state.whenOrNull(authorized: (userEntity) {
@@ -65,24 +67,26 @@ class ProfileScreen extends StatelessWidget {
                           child: Row(
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  showDialog(
+                                      barrierColor: Colors.transparent,
+                                      context: context,
+                                      builder: (context) => SettingDialog(
+                                          userEntity: userEntity!));
+                                },
                                 icon: const Icon(Icons.settings),
                                 iconSize: 34.0,
+                                color: const Color.fromRGBO(140, 140, 139, 1),
                               ),
                             ],
                           ),
                         ),
                         Positioned(
-                          top: 130,
+                          top: 146,
                           left: 0,
                           right: 0,
                           child: GestureDetector(
-                            onTap: () async {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => _DataProfileUpdate(
-                                      userEntity: userEntity!));
-                            },
+                            onTap: () async {},
                             child: Align(
                               alignment: Alignment.center,
                               child: Container(
@@ -101,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                         Positioned(
-                          bottom: -70,
+                          bottom: -30,
                           left: 20,
                           right: 20,
                           child: Container(
@@ -129,23 +133,6 @@ class ProfileScreen extends StatelessWidget {
                                     fontSize: 16,
                                   ),
                                 ),
-                                const SizedBox(height: 10),
-                                ElevatedButton(
-                                  onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 22, vertical: 10),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'Edit Profile',
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(35, 34, 32, 1)),
-                                  ),
-                                ),
                               ],
                             ),
                           ),
@@ -153,14 +140,14 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 90),
+                  const SizedBox(height: 50),
                   Padding(
                     padding: const EdgeInsets.only(right: 16.0, left: 16),
-                    child: PostFieldProfile(),
+                    child: CreatePostContainer(userEntity: userEntity!),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: PostList(userEntity: userEntity!),
+                    child: PostListProfile(userEntity: userEntity),
                   ),
                 ],
               ),
@@ -244,166 +231,6 @@ class _AvatarProfileUpdateState extends State<_AvatarProfileUpdate> {
           ),
           child: const Text('Upload Image'),
         ),
-      ],
-    );
-  }
-}
-
-// User profile update
-class _DataProfileUpdate extends StatefulWidget {
-  final UserEntity userEntity;
-
-  const _DataProfileUpdate({Key? key, required this.userEntity})
-      : super(key: key);
-
-  @override
-  State<_DataProfileUpdate> createState() => _DataProfileUpdateState();
-}
-
-class _DataProfileUpdateState extends State<_DataProfileUpdate> {
-  final usernameController = TextEditingController();
-  final descriptionController = TextEditingController();
-  final picker = ImagePicker();
-  File? _imageFile;
-
-  Future<void> _getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _imageFile = File(pickedFile!.path);
-    });
-  }
-
-  Future<String> _uploadImageToDatabase() async {
-    final FirebaseStorage storage = FirebaseStorage.instance;
-    final Reference ref =
-        storage.ref().child('${_imageFile?.path.split('/').last}');
-    final TaskSnapshot task = await ref.putFile(_imageFile!);
-    final String downloadUrl = await ref.getDownloadURL();
-    return downloadUrl;
-    // do request to db
-  }
-
-  @override
-  void dispose() {
-    usernameController.dispose();
-    descriptionController.dispose();
-    super.dispose();
-  }
-
-  // TODO description
-  @override
-  Widget build(BuildContext context) {
-    return SimpleDialog(
-      contentPadding: EdgeInsets.zero,
-      children: [
-        SizedBox(
-          height: 540,
-          width: 600,
-          child: Container(
-            color: const Color.fromRGBO(14, 14, 14, 1),
-            child: Column(
-              children: [
-                // User profile update
-                const Padding(
-                  padding: EdgeInsets.only(top: 16.0),
-                  child: Text(
-                    "Profile",
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                GestureDetector(
-                  onTap: _getImage,
-                  child: ClipOval(
-                    child: SizedBox(
-                      width: 130,
-                      height: 130,
-                      child: _imageFile != null
-                          ? Image.file(
-                              File(_imageFile!.path),
-                              fit: BoxFit.cover,
-                            ) // edit to previous user avatar
-                          : Image.network(
-                              widget.userEntity.image,
-                              fit: BoxFit.cover,
-                            ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 40),
-                const Text(
-                  "Username",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16, top: 8),
-                  child: AppTextFieldProfile(
-                      controller: usernameController,
-                      labelText: widget.userEntity.username),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  "About",
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16, top: 8),
-                  child: AppTextFieldProfile(
-                      controller: descriptionController,
-                      labelText: widget.userEntity.description),
-                ),
-                const SizedBox(height: 40),
-                SizedBox(
-                  width: 300,
-                  height: 50,
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        String url = await _uploadImageToDatabase();
-                        Navigator.pop(context);
-                        context.read<AuthCubit>().userUpdate(image: url);
-                        context.read<AuthCubit>().userUpdate(
-                              username: usernameController.text,
-                              description: descriptionController.text,
-                            );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 22, vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                      ),
-                      child: const Text(
-                        "Save",
-                        style: TextStyle(
-                            color: Color.fromRGBO(35, 34, 32, 1),
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      )),
-                ),
-                // User password update
-              ],
-            ),
-          ),
-        )
       ],
     );
   }

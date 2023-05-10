@@ -11,7 +11,6 @@ class PostEntity with _$PostEntity{
   const factory PostEntity({
     required int id,
      String? content,
-     String? preContent,
      String? image,
      AuthorEntity? author,
   }) = _PostEntity;

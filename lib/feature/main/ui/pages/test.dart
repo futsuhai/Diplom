@@ -1,4 +1,4 @@
-import 'package:client_id/feature/posts/domain/entity/post/ui/post_list.dart';
+import 'package:client_id/feature/posts/domain/entity/post/ui/post_list_profile.dart';
 import 'package:flutter/material.dart';
 
 class Test extends StatelessWidget {

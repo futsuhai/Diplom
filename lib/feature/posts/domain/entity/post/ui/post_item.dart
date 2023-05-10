@@ -3,10 +3,9 @@ import 'package:client_id/feature/posts/domain/entity/post/post_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../app/domain/error_entity/error_entity.dart';
-import '../../../../../../app/ui/app_loader.dart';
-import '../../../../../../app/ui/components/app_snackBar.dart';
-import '../../../../../auth/domain/auth_state/auth_cubit.dart';
+import '../../../state/post_cubit.dart';
+
+
 
 class PostItem extends StatelessWidget{
   const PostItem({super.key, required this.postEntity,required this.userEntity});
@@ -30,7 +29,7 @@ class PostItem extends StatelessWidget{
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.only(top: 16, right: 16, left: 16, bottom: 8),
                   child:  CircleAvatar(
                     radius: 24,
                     backgroundImage: NetworkImage(
@@ -47,8 +46,18 @@ class PostItem extends StatelessWidget{
                 ),
                 const Spacer(),
                 IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.more_vert),
+                  onPressed: () {
+                    context.read<PostCubit>().deletePost(postEntity.id.toString());
+                  },
+                  icon: const Icon(Icons.delete),
+                  padding: const EdgeInsets.only(left: 48),
+                  color: const Color.fromRGBO(140, 140, 139, 1),
+                ),
+                IconButton(
+                  onPressed: () {
+
+                  },
+                  icon: const Icon(Icons.ios_share_rounded),
                   color: const Color.fromRGBO(140, 140, 139, 1),
                 ),
               ],
@@ -81,7 +90,7 @@ class PostItem extends StatelessWidget{
                 )),
             // Post Image
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 8, top: 6),
               child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   return SizedBox(

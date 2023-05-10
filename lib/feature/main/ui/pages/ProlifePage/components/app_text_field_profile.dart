@@ -19,6 +19,7 @@ class AppTextFieldProfile extends StatelessWidget {
       validator: emptyValidator,
       maxLines: 1,
       controller: controller,
+      style: const TextStyle(color: Color.fromRGBO(140, 140, 139, 1)),
       decoration: InputDecoration(
           labelText: labelText,
           labelStyle: const TextStyle(color: Color.fromRGBO(140, 140, 139, 1)),

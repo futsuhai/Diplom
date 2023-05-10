@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:client_id/feature/auth/domain/auth_state/auth_cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -11,9 +14,18 @@ part 'post_cubit.freezed.dart';
 part 'post_cubit.g.dart';
 
 class PostCubit extends HydratedCubit<PostState> {
-  PostCubit(this.repo) : super(const PostState(asyncSnapshot: AsyncSnapshot.nothing()));
+  PostCubit(this.repo, this.authCubit) : super(const PostState(asyncSnapshot: AsyncSnapshot.nothing())){
+    authSub = authCubit.stream.listen((event) {
+      event.mapOrNull(
+        authorized: (value) => fetchPosts(),
+        notAuthorized: (value) => logOut(),
+      );
+    });
+  }
 
   final PostRepo repo;
+  final AuthCubit authCubit;
+  late final StreamSubscription authSub;
 
   Future<void> fetchPosts() async{
     await repo.fetchPosts().then((value) {
@@ -25,6 +37,26 @@ class PostCubit extends HydratedCubit<PostState> {
     }).catchError((error) {
       addError(error);
     });
+  }
+
+  Future<void> createPost({String? content, String? image}) async{
+    await repo.createPost(content: content, image: image).then((value) {
+      fetchPosts();
+    }).catchError((error) {
+      addError(error);
+    });
+  }
+
+  Future<void> deletePost(String id) async{
+    await repo.deletePost(id).then((value) {
+      fetchPosts();
+    }).catchError((error) {
+      addError(error);
+    });
+  }
+
+  void logOut(){
+    emit(state.copyWith(asyncSnapshot: const AsyncSnapshot.nothing(), postList: []));
   }
 
   @override
@@ -43,5 +75,10 @@ class PostCubit extends HydratedCubit<PostState> {
   @override
   Map<String, dynamic>? toJson(state) {
     return state.toJson();
+  }
+
+  @override
+  Future<void> close() {
+    return super.close();
   }
 }

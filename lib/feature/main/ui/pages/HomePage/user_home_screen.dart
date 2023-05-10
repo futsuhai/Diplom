@@ -4,8 +4,9 @@ import '../../../../../app/domain/error_entity/error_entity.dart';
 import '../../../../../app/ui/app_loader.dart';
 import '../../../../../app/ui/components/app_snackBar.dart';
 import '../../../../auth/domain/auth_state/auth_cubit.dart';
-import '../../../../posts/domain/entity/post/ui/post_list.dart';
-import '../../components/app_post_field.dart';
+import '../../../../posts/domain/entity/post/ui/post_list_home.dart';
+import '../../../../posts/domain/entity/post/ui/post_list_profile.dart';
+import '../ProlifePage/components/create_post_container.dart';
 import 'components/postFieldHome.dart';
 
 class UserHomeScreen extends StatelessWidget {
@@ -30,7 +31,9 @@ class UserHomeScreen extends StatelessWidget {
           backgroundColor: const Color.fromRGBO(14, 14, 14, 1),
           actions: [
             IconButton(
-                onPressed: () => context.read<AuthCubit>().logOut(),
+                onPressed: () {
+                  context.read<AuthCubit>().logOut();
+                },
                 icon: const Icon(Icons.exit_to_app))
           ],
         ),
@@ -55,18 +58,20 @@ class UserHomeScreen extends StatelessWidget {
           }
           return Column(
             children: [
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               // PostField
               Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: PostFieldHome(),
+                padding: const EdgeInsets.only(right: 8.0, left: 8),
+                child: CreatePostContainer(userEntity: userEntity!),
               ),
               // Posts space
               const Divider(),
-               Expanded(child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: PostList(userEntity: userEntity!),
-              )),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: PostListHome(userEntity: userEntity!),
+                ),
+              ),
             ],
           );
         }));

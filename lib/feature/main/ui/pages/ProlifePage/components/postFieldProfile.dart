@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../components/app_post_field.dart';
 
-class PostFieldProfile extends StatelessWidget{
-   PostFieldProfile({super.key});
+class CreatePostButton extends StatelessWidget{
+  CreatePostButton({super.key});
 
   final controllerNewPost = TextEditingController();
 

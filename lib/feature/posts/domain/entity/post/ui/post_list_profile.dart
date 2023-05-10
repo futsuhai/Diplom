@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../auth/domain/entities/user_entity/user_entity.dart';
 
-class PostList extends StatelessWidget{
-  const PostList({super.key, required this.userEntity});
+class PostListProfile extends StatelessWidget{
+  const PostListProfile({super.key, required this.userEntity});
 
   final UserEntity userEntity;
 
@@ -21,7 +21,7 @@ class PostList extends StatelessWidget{
         if(state.postList.isNotEmpty) {
           return ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: state.postList.length,
             itemBuilder: (context, index) {
               return PostItem(postEntity: state.postList[index], userEntity: userEntity,);

@@ -11,8 +11,7 @@ class MainAppBuilder implements AppBuilder {
   @override
   Widget buildApp() {
     return const _GlobalProviders(
-      child: MaterialApp(
-          home: RootScreen()),
+      child: MaterialApp(home: RootScreen()),
     );
   }
 }
@@ -28,7 +27,9 @@ class _GlobalProviders extends StatelessWidget {
         create: (context) => locator.get<AuthCubit>(),
       ),
       BlocProvider(
-        create: (context) =>PostCubit(locator.get<PostRepo>())..fetchPosts(),
+        create: (context) =>
+            PostCubit(locator.get<PostRepo>(), locator.get<AuthCubit>())
+              ..fetchPosts(),
       )
     ], child: child);
   }

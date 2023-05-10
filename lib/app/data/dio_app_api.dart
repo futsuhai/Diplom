@@ -102,4 +102,16 @@ class DioAppApi implements AppApi {
   Future fetchPosts() {
     return dio.get("/data/posts");
   }
+
+  @override
+  Future createPost({String? content, String? image}) {
+    return dio.post("/data/posts", data: {
+      "content": content, "image": image
+    });
+  }
+
+  @override
+  Future deletePost(String id) {
+    return dio.delete("/data/posts/$id");
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:client_id/feature/posts/domain/entity/post/post_entity.dart';
 import 'package:client_id/feature/posts/domain/post_repo.dart';
 import 'package:injectable/injectable.dart';
 
@@ -14,6 +15,25 @@ class NetPostRepo implements PostRepo {
     try {
       final response = await api.fetchPosts();
       return response.data;
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<Iterable> createPost({String? content, String? image}) async{
+    try {
+      final response = await api.createPost(content: content, image: image);
+      return response.data["message"];
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+  @override
+  Future deletePost(String id) async{
+    try {
+       await api.deletePost(id);
     } catch (_) {
       rethrow;
     }

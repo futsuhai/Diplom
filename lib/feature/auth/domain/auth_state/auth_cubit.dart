@@ -2,7 +2,6 @@ import 'package:client_id/app/domain/error_entity/error_entity.dart';
 import 'package:client_id/feature/auth/domain/auth_repository.dart';
 import 'package:client_id/feature/auth/domain/entities/user_entity/user_entity.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -81,20 +80,18 @@ class AuthCubit extends HydratedCubit<AuthState> {
     try {
       _updateUserState(const AsyncSnapshot.waiting());
       await Future.delayed(const Duration(seconds: 1));
-      final bool isEmptyImage = image?.trim().isEmpty == true;
+      final bool isEmptyImage = image?.isEmpty == true;
       final bool isEmptyUsername = username?.trim().isEmpty == true;
-      final bool isEmptyEmail = email?.trim().isEmpty == true;
       final bool isEmptyDescription = description?.trim().isEmpty == true;
       final UserEntity newUserEntity = await authRepository.userUpdate(
         username: isEmptyUsername ? null : username,
-        email: isEmptyEmail ? null : email,
         description: isEmptyDescription ? null : description,
-        image: isEmptyImage ? null : image,
+        image: isEmptyImage ? "" : (image ?? ""),
       );
       emit(state.maybeWhen(
         orElse: () => state,
         authorized: (userEntity) => AuthState.authorized(userEntity.copyWith(
-            email: newUserEntity.email, username: newUserEntity.username, description: newUserEntity.description)),
+            email: newUserEntity.email, username: newUserEntity.username, description: newUserEntity.description, image: newUserEntity.image)),
       ));
       _updateUserState(const AsyncSnapshot.withData(
           ConnectionState.done, "Complete update data"));

@@ -1,58 +1,46 @@
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import '../../components/image_from_url.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map/flutter_map.dart';
 
-class MapScreen extends StatefulWidget {
-  MapScreen({Key? key}) : super(key: key);
+import '../../../../../app/domain/error_entity/error_entity.dart';
+import '../../../../../app/ui/app_loader.dart';
+import '../../../../../app/ui/components/app_snackBar.dart';
+import '../../../../auth/domain/auth_state/auth_cubit.dart';
+import 'components/Google_Map.dart';
 
-  @override
-  _MapScreenState createState() => _MapScreenState();
-}
-
-class _MapScreenState extends State<MapScreen> {
-  final picker = ImagePicker();
-  File? _imageFile;
-
-  Future<void> _getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _imageFile = File(pickedFile!.path);
-    });
-  }
-
-  Future<void> _uploadImageToFirebase() async {
-    final FirebaseStorage storage = FirebaseStorage.instance;
-    final Reference ref = storage.ref().child('image.jpg');
-    final TaskSnapshot task = await ref.putFile(_imageFile!);
-    final String downloadUrl = await ref.getDownloadURL();
-    print('File Uploaded: $downloadUrl');
-  }
+class MapScreen extends StatelessWidget {
+  MapScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Map"),
-        backgroundColor: Colors.grey[600],
-      ),
-      body: Column(
-        children: [
-          ElevatedButton(
-            onPressed: _getImage,
-            child: Text('Choose Image'),
-          ),
-          SizedBox(height: 16),
-          _imageFile != null ? Image.file(File(_imageFile!.path), height: 300) : SizedBox(),
-          SizedBox(height: 16),
-          ElevatedButton(
-            onPressed: _uploadImageToFirebase,
-            child: Text('Upload Image'),
-          ),
-
-        ],
-      ),
-    );
+        backgroundColor: const Color.fromRGBO(14, 14, 14, 1),
+        appBar: AppBar(
+          title: const Text("Map"),
+          backgroundColor: const Color.fromRGBO(14, 14, 14, 1),
+        ),
+        body: BlocConsumer<AuthCubit, AuthState>(listener: (context, state) {
+          state.whenOrNull(authorized: (userEntity) {
+            if (userEntity.userState?.hasData == true) {
+              AppSnackBar.showSnackBarWithMessage(
+                  context, userEntity.userState?.data);
+            }
+            if (userEntity.userState?.hasError == true) {
+              AppSnackBar.showSnackBarWithError(context,
+                  ErrorEntity.fromException(userEntity.userState?.error));
+            }
+          });
+        }, builder: (context, state) {
+          final userEntity = state.whenOrNull(
+            authorized: (userEntity) => userEntity,
+          );
+          if (userEntity?.userState?.connectionState ==
+              ConnectionState.waiting) {
+            return const AppLoader();
+          }
+          return  Scaffold(
+              body: CustomMap(),
+          );
+        }));
   }
 }

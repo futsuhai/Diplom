@@ -1,9 +1,8 @@
-
 import 'package:client_id/feature/main/ui/pages/DialogPage/dialog_screen.dart';
+import 'package:client_id/feature/main/ui/pages/FollowPage/follow_screen.dart';
 import 'package:client_id/feature/main/ui/pages/MapPage/map_screen.dart';
 import 'package:client_id/feature/main/ui/pages/ProlifePage/profile_page.dart';
 import 'package:client_id/feature/main/ui/pages/HomePage/user_home_screen.dart';
-import 'package:client_id/feature/main/ui/pages/test.dart';
 import 'package:flutter/material.dart';
 
 import '../../auth/domain/entities/user_entity/user_entity.dart';
@@ -25,10 +24,10 @@ class _HomePageState extends State<HomePage> {
   _HomePageState(this.userEntity) {
     _children = [
       UserHomeScreen(),
-      DialogScreen(),
       MapScreen(),
-       ProfileScreen(),
-      const Test(),
+      DialogScreen(),
+      FollowScreen(),
+      ProfileScreen(),
     ];
   } // create constructor
 
@@ -51,11 +50,11 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: Colors.teal.shade400,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.chat_bubble), label: "Dialogs"),
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
           BottomNavigationBarItem(
-              icon: Icon(Icons.map), label: "Map"),
+              icon: Icon(Icons.chat_bubble), label: "Dialogs"),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Friends"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Test"),
         ],
       ),
     );

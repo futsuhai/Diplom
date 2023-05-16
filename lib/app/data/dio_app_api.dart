@@ -1,4 +1,5 @@
 import 'package:client_id/app/domain/app_api.dart';
+import 'package:client_id/app/ui/components/app_text_button_login.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
@@ -112,10 +113,5 @@ class DioAppApi implements AppApi {
   @override
   Future deletePost(String id) {
     return dio.delete("/data/posts/$id");
-  }
-
-  @override
-  Future fetchAll() {
-    return dio.get("/auth/all");
   }
 }

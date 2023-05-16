@@ -14,12 +14,14 @@ class DialogScreen extends StatelessWidget {
     "lib/assets/post1.png",
     "lib/assets/post2.png",
     "lib/assets/post3.png",
-    "lib/assets/post1.png",
-    "lib/assets/post2.png",
-    "lib/assets/post3.png",
-    "lib/assets/post1.png",
-    "lib/assets/post2.png",
-    "lib/assets/post3.png",
+    "lib/assets/post4.png",
+    "lib/assets/pos65.png",
+    "lib/assets/post7.png",
+    "lib/assets/post7.png",
+    "lib/assets/post7.png",
+    "lib/assets/post7.png",
+    "lib/assets/post7.png",
+    "lib/assets/post7.png",
   ];
 
   @override
@@ -69,7 +71,7 @@ class DialogScreen extends StatelessWidget {
                                         AssetImage('lib/icons/avatar_test.png'),
                                   ),
                                 ),
-                                const Expanded(
+                                Expanded(
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -77,15 +79,15 @@ class DialogScreen extends StatelessWidget {
                                       Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          "Tailer",
-                                          style: TextStyle(
+                                          userEntity?.username ?? "null",
+                                          style: const TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
-                                      Text(
-                                        "Это я - твоя вторая личность. Сейчас напишу это сообщение со всех своих аккаунтов.",
+                                      const Text(
+                                        "Test message",
                                         style: TextStyle(
                                           color:
                                               Color.fromRGBO(140, 140, 139, 1),

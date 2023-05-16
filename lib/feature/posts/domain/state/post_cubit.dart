@@ -10,14 +10,11 @@ import 'package:client_id/feature/posts/domain/entity/post/post_entity.dart';
 import '../post_repo.dart';
 
 part 'post_state.dart';
-
 part 'post_cubit.freezed.dart';
-
 part 'post_cubit.g.dart';
 
 class PostCubit extends HydratedCubit<PostState> {
-  PostCubit(this.repo, this.authCubit)
-      : super(const PostState(asyncSnapshot: AsyncSnapshot.nothing())) {
+  PostCubit(this.repo, this.authCubit) : super(const PostState(asyncSnapshot: AsyncSnapshot.nothing())){
     authSub = authCubit.stream.listen((event) {
       event.mapOrNull(
         authorized: (value) => fetchPosts(),
@@ -30,19 +27,19 @@ class PostCubit extends HydratedCubit<PostState> {
   final AuthCubit authCubit;
   late final StreamSubscription authSub;
 
-  Future<void> fetchPosts() async {
+  Future<void> fetchPosts() async{
     await repo.fetchPosts().then((value) {
       final Iterable iterable = value;
       emit(state.copyWith(
-          postList: iterable.map((e) => PostEntity.fromJson(e)).toList(),
+        postList: iterable.map((e) => PostEntity.fromJson(e)).toList(),
           asyncSnapshot:
-              const AsyncSnapshot.withData(ConnectionState.done, true)));
+          const AsyncSnapshot.withData(ConnectionState.done, true)));
     }).catchError((error) {
       addError(error);
     });
   }
 
-  Future<void> createPost({String? content, String? image}) async {
+  Future<void> createPost({String? content, String? image}) async{
     await repo.createPost(content: content, image: image).then((value) {
       fetchPosts();
     }).catchError((error) {
@@ -50,7 +47,7 @@ class PostCubit extends HydratedCubit<PostState> {
     });
   }
 
-  Future<void> deletePost(String id) async {
+  Future<void> deletePost(String id) async{
     await repo.deletePost(id).then((value) {
       fetchPosts();
     }).catchError((error) {
@@ -58,15 +55,15 @@ class PostCubit extends HydratedCubit<PostState> {
     });
   }
 
-  void logOut() {
-    emit(state
-        .copyWith(asyncSnapshot: const AsyncSnapshot.nothing(), postList: []));
+  void logOut(){
+    emit(state.copyWith(asyncSnapshot: const AsyncSnapshot.nothing(), postList: []));
   }
 
   @override
   void addError(Object error, [StackTrace? stackTrace]) {
     emit(state.copyWith(
-        asyncSnapshot: AsyncSnapshot.withError(ConnectionState.done, error)));
+      asyncSnapshot: AsyncSnapshot.withError(ConnectionState.done, error)
+    ));
     super.addError(error, stackTrace);
   }
 

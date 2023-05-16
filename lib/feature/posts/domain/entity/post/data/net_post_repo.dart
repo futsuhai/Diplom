@@ -1,3 +1,4 @@
+import 'package:client_id/feature/posts/domain/entity/post/post_entity.dart';
 import 'package:client_id/feature/posts/domain/post_repo.dart';
 import 'package:injectable/injectable.dart';
 

@@ -55,7 +55,7 @@ class PostItem extends StatelessWidget{
                 ),
                 IconButton(
                   onPressed: () {
-
+                    context.read<PostCubit>().fetchPostsWithId("2");
                   },
                   icon: const Icon(Icons.ios_share_rounded),
                   color: const Color.fromRGBO(140, 140, 139, 1),

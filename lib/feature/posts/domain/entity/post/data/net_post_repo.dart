@@ -38,4 +38,14 @@ class NetPostRepo implements PostRepo {
       rethrow;
     }
   }
+
+  @override
+  Future<Iterable> fetchPostsWithId(String id) async{
+    try {
+      final response = await api.fetchPostsWithId(id);
+      return response.data;
+    } catch (_) {
+      rethrow;
+    }
+  }
 }

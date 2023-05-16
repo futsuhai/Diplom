@@ -5,9 +5,7 @@ import '../../../../../app/ui/app_loader.dart';
 import '../../../../../app/ui/components/app_snackBar.dart';
 import '../../../../auth/domain/auth_state/auth_cubit.dart';
 import '../../../../posts/domain/entity/post/ui/post_list_home.dart';
-import '../../../../posts/domain/entity/post/ui/post_list_profile.dart';
 import '../ProlifePage/components/create_post_container.dart';
-import 'components/postFieldHome.dart';
 
 class UserHomeScreen extends StatelessWidget {
   UserHomeScreen({super.key});

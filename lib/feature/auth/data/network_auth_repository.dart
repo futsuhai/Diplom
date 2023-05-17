@@ -22,6 +22,18 @@ class NetworkAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<List<UserEntity>> getAllUsers() async {
+    try{
+      final response = await api.getAllUsers();
+      final List<UserDto> userDtos =
+      List<UserDto>.from(response.data.map((data) => UserDto.fromJson(data)));
+      return userDtos.map((dto) => dto.toEntity()).toList();
+    } catch (_){
+      rethrow;
+    }
+  }
+
+  @override
   Future<String> passwordUpdate(
       {required String oldPassword, required String newPassword}) async {
     try {
@@ -79,4 +91,5 @@ class NetworkAuthRepository implements AuthRepository {
       rethrow;
     }
   }
+
 }

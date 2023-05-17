@@ -1,3 +1,5 @@
+import 'entities/user_entity/user_entity.dart';
+
 abstract class AuthRepository{
   Future<dynamic> singUp({
     required String password,
@@ -25,4 +27,7 @@ abstract class AuthRepository{
   });
 
   Future<dynamic> refreshToken({String? refreshToken});
+
+  Future<List<UserEntity>> getAllUsers();
+
 }

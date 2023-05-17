@@ -7,7 +7,9 @@ import 'package:client_id/feature/posts/domain/state/post_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+
 class MainAppBuilder implements AppBuilder {
+
   @override
   Widget buildApp() {
     return const _GlobalProviders(
@@ -30,11 +32,6 @@ class _GlobalProviders extends StatelessWidget {
         create: (context) =>
             PostCubit(locator.get<PostRepo>(), locator.get<AuthCubit>())
               ..fetchPosts(),
-      ),
-      BlocProvider(
-        create: (context) =>
-        PostCubit(locator.get<PostRepo>(), locator.get<AuthCubit>())
-          ..fetchPosts(),
       ),
     ], child: child);
   }

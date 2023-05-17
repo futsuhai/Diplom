@@ -32,6 +32,7 @@ class AuthCubit extends HydratedCubit<AuthState> {
     }
   }
 
+
   Future<void> signUp({
     required String username,
     required String password,

@@ -1,5 +1,4 @@
 import 'package:client_id/app/domain/app_api.dart';
-import 'package:client_id/app/ui/components/app_text_button_login.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
@@ -119,4 +118,10 @@ class DioAppApi implements AppApi {
   Future fetchPostsWithId(String id) {
     return dio.get("/data/posts/$id");
   }
+
+  @override
+  Future getAllUsers() {
+    return dio.get("/auth/all");
+  }
+
 }

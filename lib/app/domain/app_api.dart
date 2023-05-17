@@ -39,4 +39,7 @@ abstract class AppApi {
   Future<dynamic> createPost({String? content, String? image});
 
   Future<dynamic> deletePost(String id);
+
+  Future<dynamic> getAllUsers();
+
 }

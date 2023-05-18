@@ -1,21 +1,44 @@
 import 'package:client_id/feature/auth/domain/entities/user_entity/user_entity.dart';
+import 'package:client_id/feature/main/ui/pages/FriendsPage/components/user_profile.dart';
 import 'package:flutter/material.dart';
 
-class UserItem extends StatelessWidget {
-  const UserItem({super.key, required this.userEntity});
+import '../../../../../../app/di/init_di.dart';
+import '../../../../../../app/domain/app_api.dart';
 
+class UserItem extends StatelessWidget {
+  UserItem({super.key, required this.userEntity});
+
+  final AppApi appApi = locator.get<AppApi>();
   final UserEntity userEntity;
+
+  Future<void> _addFriend(String id) async {
+    try {
+      await appApi.addFriend(id);
+    } catch (_) {
+      rethrow;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          padding: const EdgeInsets.only(top: 14, bottom: 14, left: 8),
-          child:  CircleAvatar(
-            radius: 30,
-            backgroundImage: NetworkImage(
-                userEntity.image),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UserPage(userEntity: userEntity),
+              ),
+            );
+          },
+          child: Container(
+            padding: const EdgeInsets.only(top: 14, bottom: 14, left: 8),
+            child:  CircleAvatar(
+              radius: 30,
+              backgroundImage: NetworkImage(
+                  userEntity.image),
+            ),
           ),
         ),
         Expanded(
@@ -37,15 +60,15 @@ class UserItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                 Padding(
-                   padding: const EdgeInsets.only(left: 8.0),
-                   child: Text(
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
                     userEntity.description,
                     style: const TextStyle(
                       color: Color.fromRGBO(140, 140, 139, 1),
                     ),
+                  ),
                 ),
-                 ),
               ],
             ),
           ),
@@ -54,6 +77,7 @@ class UserItem extends StatelessWidget {
           padding: const EdgeInsets.only(right: 20.0, top: 8),
           child: IconButton(
             onPressed: () {
+              _addFriend(userEntity.id);
             },
             icon: const Icon(Icons.add),
             iconSize: 28,

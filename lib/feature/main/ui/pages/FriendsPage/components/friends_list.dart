@@ -6,17 +6,18 @@ import 'friend_item.dart';
 
 
 class FriendsList extends StatelessWidget{
-  const FriendsList({super.key, required this.userList});
+  const FriendsList({super.key, required this.friendList, required this.getAllFriends});
 
-  final List<UserEntity> userList;
+  final List<UserEntity> friendList;
+  final Future<void> Function() getAllFriends;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: userList.length,
+      itemCount: friendList.length,
       itemBuilder: (context, index) {
-        return FriendItem(userEntity: userList[index]);
+        return FriendItem(userEntity: friendList[index], getAllFriends: getAllFriends,);
       },
     );
   }

@@ -22,15 +22,29 @@ class FriendsScreen extends StatefulWidget {
 class _FriendsScreenState extends State<FriendsScreen> {
   final AppApi appApi = locator.get<AppApi>();
   List<UserEntity> userList = [];
+  List<UserEntity> friendsList = [];
   bool showFirstList = true;
 
   @override
   void initState() {
     super.initState();
-    _getAllUsers();
+    _getAllFriends();
   }
 
-  @override
+  Future<void> _getAllFriends() async {
+    try {
+      final response = await appApi.getAllFriends();
+      final List<UserDto> userDtos = List<UserDto>.from(
+          response.data.map((data) => UserDto.fromJson(data)));
+      var users = userDtos.map((dto) => dto.toEntity()).toList();
+      setState(() {
+        friendsList = users;
+      });
+    } catch (_) {
+      rethrow;
+    }
+  }
+
   Future<void> _getAllUsers() async {
     try {
       final response = await appApi.getAllUsers();
@@ -100,6 +114,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                               onTap: () {
                                 setState(() {
                                   showFirstList = true;
+                                  _getAllFriends();
                                 });
                               },
                               child: Container(
@@ -121,6 +136,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                               onTap: () {
                                 setState(() {
                                   showFirstList = false;
+                                  _getAllUsers();
                                 });
                               },
                               child: Container(
@@ -143,7 +159,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: showFirstList
-                      ? FriendsList(userList: userList)
+                      ? FriendsList(friendList: friendsList, getAllFriends: _getAllFriends,)
                       : UsersList(userList: userList),
                 ),
               ),

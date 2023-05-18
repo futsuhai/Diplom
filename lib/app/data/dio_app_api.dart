@@ -124,4 +124,19 @@ class DioAppApi implements AppApi {
     return dio.get("/auth/all");
   }
 
+  @override
+  Future addFriend(String id) {
+    return dio.post("/auth/friend/$id");
+  }
+
+  @override
+  Future deleteFriend(String id) {
+    return dio.delete("/auth/friend/$id");
+  }
+
+  @override
+  Future getAllFriends() {
+    return dio.get("/auth/friend");
+  }
+
 }

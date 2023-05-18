@@ -42,4 +42,10 @@ abstract class AppApi {
 
   Future<dynamic> getAllUsers();
 
+  Future<dynamic> getAllFriends();
+
+  Future<dynamic> addFriend(String id);
+
+  Future<dynamic> deleteFriend(String id);
+
 }

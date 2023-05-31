@@ -6,15 +6,16 @@ import '../../../../../../app/domain/app_api.dart';
 import 'friend_profile.dart';
 
 class FriendItem extends StatelessWidget {
-   FriendItem({super.key, required this.userEntity, required this.getAllFriends});
+  FriendItem(
+      {super.key, required this.userEntity, required this.getAllFriends});
 
   final AppApi appApi = locator.get<AppApi>();
   final UserEntity userEntity;
   final Future<void> Function() getAllFriends;
 
-   void _handleButtonClick() async {
-     await getAllFriends();
-   }
+  void _handleButtonClick() async {
+    await getAllFriends();
+  }
 
   Future<void> _deleteFriend(String id) async {
     try {
@@ -24,25 +25,35 @@ class FriendItem extends StatelessWidget {
     }
   }
 
+  Future<void> _createChat(String id) async {
+    try {
+      await appApi.createChat(id);
+    } catch (_) {
+      rethrow;
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => FriendPage(userEntity: userEntity),
+                builder: (context) => FriendPage(
+                  userEntity: userEntity
+                ),
               ),
             );
           },
           child: Container(
             padding: const EdgeInsets.only(top: 14, bottom: 14, left: 8),
-            child:  CircleAvatar(
+            child: CircleAvatar(
               radius: 30,
-              backgroundImage: NetworkImage(
-                  userEntity.image),
+              backgroundImage: NetworkImage(userEntity.image),
             ),
           ),
         ),
@@ -79,6 +90,26 @@ class FriendItem extends StatelessWidget {
           ),
         ),
         Padding(
+          padding: const EdgeInsets.only(left: 0.0, top: 8),
+          child: IconButton(
+            onPressed: () {
+              // _createChat(userEntity.trueId ?? "default");
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => ChatPage(
+              //         userEntity: userEntity
+              //     ),
+              //   ),
+              // );
+            },
+            icon: const Icon(Icons.chat_bubble),
+            iconSize: 27,
+            padding: const EdgeInsets.only(left: 0),
+            color: const Color.fromRGBO(140, 140, 139, 1),
+          ),
+        ),
+        Padding(
           padding: const EdgeInsets.only(right: 20.0, top: 8),
           child: IconButton(
             onPressed: () {
@@ -87,7 +118,7 @@ class FriendItem extends StatelessWidget {
             },
             icon: const Icon(Icons.delete),
             iconSize: 28,
-            padding: const EdgeInsets.only(left: 48),
+            padding: const EdgeInsets.only(left: 0),
             color: const Color.fromRGBO(140, 140, 139, 1),
           ),
         ),

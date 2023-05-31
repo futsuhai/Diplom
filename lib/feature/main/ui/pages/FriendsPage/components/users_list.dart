@@ -5,9 +5,10 @@ import '../../../../../auth/domain/entities/user_entity/user_entity.dart';
 
 
 class UsersList extends StatelessWidget{
-  const UsersList({super.key, required this.userList});
+  const UsersList({super.key, required this.userList, required this.getAllUsers});
 
   final List<UserEntity> userList;
+  final Future<void> Function() getAllUsers;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class UsersList extends StatelessWidget{
       shrinkWrap: true,
       itemCount: userList.length,
       itemBuilder: (context, index) {
-        return UserItem(userEntity: userList[index]);
+        return UserItem(userEntity: userList[index], getAllUsers: getAllUsers,);
       },
     );
   }

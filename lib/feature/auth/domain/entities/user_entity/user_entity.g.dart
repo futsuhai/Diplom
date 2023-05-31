@@ -15,6 +15,7 @@ _$_UserEntity _$$_UserEntityFromJson(Map<String, dynamic> json) =>
       image: json['image'] as String,
       accessToken: json['accessToken'] as String?,
       refreshToken: json['refreshToken'] as String?,
+      trueId: json['trueId'] as String?,
     );
 
 Map<String, dynamic> _$$_UserEntityToJson(_$_UserEntity instance) =>
@@ -26,4 +27,5 @@ Map<String, dynamic> _$$_UserEntityToJson(_$_UserEntity instance) =>
       'image': instance.image,
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,
+      'trueId': instance.trueId,
     };

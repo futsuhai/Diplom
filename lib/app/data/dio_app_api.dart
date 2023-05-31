@@ -139,4 +139,52 @@ class DioAppApi implements AppApi {
     return dio.get("/auth/friend");
   }
 
+  @override
+  Future fetchPostsWithTrueId(String id) {
+    return dio.get("/data/postsF/$id");
+  }
+
+  @override
+  Future getProfileWithId(String id) {
+    return dio.get("/auth/userNews/$id");
+  }
+
+  @override
+  Future createChat(String id) {
+    return dio.post("/auth/chat/$id");
+  }
+
+  @override
+  Future deleteChat(String id) {
+    return dio.delete("/auth/chat/$id");
+  }
+
+  @override
+  Future fetchChats() {
+    return dio.get("/auth/chat");
+  }
+
+  @override
+  Future fetchMessages(String id) {
+    return dio.get("/auth/message/$id");
+  }
+
+  @override
+  Future sendMessage(int chatId, String text) {
+    return dio.put("/auth/message", data: {
+      "chatId": chatId,
+      "text": text
+    });
+  }
+
+  @override
+  Future deleteMessage(String id) {
+    return dio.delete("/auth/message/$id");
+  }
+
+  @override
+  Future fetchLastMessage(String id) {
+    return dio.get("/auth/lastMessage/$id");
+  }
+
 }

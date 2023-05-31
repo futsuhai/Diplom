@@ -53,6 +53,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
       var users = userDtos.map((dto) => dto.toEntity()).toList();
       setState(() {
         userList = users;
+        userList.removeWhere((user) => friendsList.any((friend) => friend.username == user.username));
       });
     } catch (_) {
       rethrow;
@@ -160,7 +161,7 @@ class _FriendsScreenState extends State<FriendsScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: showFirstList
                       ? FriendsList(friendList: friendsList, getAllFriends: _getAllFriends,)
-                      : UsersList(userList: userList),
+                      : UsersList(userList: userList, getAllUsers: _getAllUsers,),
                 ),
               ),
             ],

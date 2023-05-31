@@ -14,6 +14,7 @@ class UserEntity with _$UserEntity {
     required String image,
     String? accessToken,
     String? refreshToken,
+    String? trueId,
     @JsonKey(ignore: true) AsyncSnapshot? userState,
 }) = _UserEntity;
   factory UserEntity.fromJson(Map<String, dynamic> json) =>

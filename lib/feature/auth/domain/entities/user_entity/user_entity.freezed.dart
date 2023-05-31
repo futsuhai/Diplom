@@ -27,6 +27,7 @@ mixin _$UserEntity {
   String get image => throw _privateConstructorUsedError;
   String? get accessToken => throw _privateConstructorUsedError;
   String? get refreshToken => throw _privateConstructorUsedError;
+  String? get trueId => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   AsyncSnapshot<dynamic>? get userState => throw _privateConstructorUsedError;
 
@@ -50,6 +51,7 @@ abstract class $UserEntityCopyWith<$Res> {
       String image,
       String? accessToken,
       String? refreshToken,
+      String? trueId,
       @JsonKey(ignore: true) AsyncSnapshot<dynamic>? userState});
 }
 
@@ -73,6 +75,7 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
     Object? image = null,
     Object? accessToken = freezed,
     Object? refreshToken = freezed,
+    Object? trueId = freezed,
     Object? userState = freezed,
   }) {
     return _then(_value.copyWith(
@@ -104,6 +107,10 @@ class _$UserEntityCopyWithImpl<$Res, $Val extends UserEntity>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
+      trueId: freezed == trueId
+          ? _value.trueId
+          : trueId // ignore: cast_nullable_to_non_nullable
+              as String?,
       userState: freezed == userState
           ? _value.userState
           : userState // ignore: cast_nullable_to_non_nullable
@@ -128,6 +135,7 @@ abstract class _$$_UserEntityCopyWith<$Res>
       String image,
       String? accessToken,
       String? refreshToken,
+      String? trueId,
       @JsonKey(ignore: true) AsyncSnapshot<dynamic>? userState});
 }
 
@@ -149,6 +157,7 @@ class __$$_UserEntityCopyWithImpl<$Res>
     Object? image = null,
     Object? accessToken = freezed,
     Object? refreshToken = freezed,
+    Object? trueId = freezed,
     Object? userState = freezed,
   }) {
     return _then(_$_UserEntity(
@@ -180,6 +189,10 @@ class __$$_UserEntityCopyWithImpl<$Res>
           ? _value.refreshToken
           : refreshToken // ignore: cast_nullable_to_non_nullable
               as String?,
+      trueId: freezed == trueId
+          ? _value.trueId
+          : trueId // ignore: cast_nullable_to_non_nullable
+              as String?,
       userState: freezed == userState
           ? _value.userState
           : userState // ignore: cast_nullable_to_non_nullable
@@ -199,6 +212,7 @@ class _$_UserEntity implements _UserEntity {
       required this.image,
       this.accessToken,
       this.refreshToken,
+      this.trueId,
       @JsonKey(ignore: true) this.userState});
 
   factory _$_UserEntity.fromJson(Map<String, dynamic> json) =>
@@ -219,12 +233,14 @@ class _$_UserEntity implements _UserEntity {
   @override
   final String? refreshToken;
   @override
+  final String? trueId;
+  @override
   @JsonKey(ignore: true)
   final AsyncSnapshot<dynamic>? userState;
 
   @override
   String toString() {
-    return 'UserEntity(email: $email, username: $username, id: $id, description: $description, image: $image, accessToken: $accessToken, refreshToken: $refreshToken, userState: $userState)';
+    return 'UserEntity(email: $email, username: $username, id: $id, description: $description, image: $image, accessToken: $accessToken, refreshToken: $refreshToken, trueId: $trueId, userState: $userState)';
   }
 
   @override
@@ -243,6 +259,7 @@ class _$_UserEntity implements _UserEntity {
                 other.accessToken == accessToken) &&
             (identical(other.refreshToken, refreshToken) ||
                 other.refreshToken == refreshToken) &&
+            (identical(other.trueId, trueId) || other.trueId == trueId) &&
             (identical(other.userState, userState) ||
                 other.userState == userState));
   }
@@ -250,7 +267,7 @@ class _$_UserEntity implements _UserEntity {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, email, username, id, description,
-      image, accessToken, refreshToken, userState);
+      image, accessToken, refreshToken, trueId, userState);
 
   @JsonKey(ignore: true)
   @override
@@ -275,6 +292,7 @@ abstract class _UserEntity implements UserEntity {
           required final String image,
           final String? accessToken,
           final String? refreshToken,
+          final String? trueId,
           @JsonKey(ignore: true) final AsyncSnapshot<dynamic>? userState}) =
       _$_UserEntity;
 
@@ -295,6 +313,8 @@ abstract class _UserEntity implements UserEntity {
   String? get accessToken;
   @override
   String? get refreshToken;
+  @override
+  String? get trueId;
   @override
   @JsonKey(ignore: true)
   AsyncSnapshot<dynamic>? get userState;

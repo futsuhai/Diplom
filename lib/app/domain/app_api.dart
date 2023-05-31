@@ -36,6 +36,11 @@ abstract class AppApi {
 
   Future<dynamic> fetchPostsWithId(String id);
 
+  //
+  Future<dynamic> fetchPostsWithTrueId(String id);
+
+  Future<dynamic> getProfileWithId(String id);
+
   Future<dynamic> createPost({String? content, String? image});
 
   Future<dynamic> deletePost(String id);
@@ -47,5 +52,19 @@ abstract class AppApi {
   Future<dynamic> addFriend(String id);
 
   Future<dynamic> deleteFriend(String id);
+
+  Future<dynamic> fetchChats();
+
+  Future<dynamic> createChat(String id);
+
+  Future<dynamic> deleteChat(String id);
+
+  Future<dynamic> sendMessage(int chatId, String text);
+
+  Future<dynamic> fetchMessages(String id);
+
+  Future<dynamic> deleteMessage(String id);
+
+  Future<dynamic> fetchLastMessage(String id);
 
 }

@@ -1,9 +1,9 @@
 
-import 'package:client_id/feature/main/ui/pages/DialogPage/dialog_screen.dart';
+import 'package:client_id/feature/main/ui/pages/DialogPage/chats_screen.dart';
 import 'package:client_id/feature/main/ui/pages/FriendsPage/friends_screen.dart';
+import 'package:client_id/feature/main/ui/pages/MapPage/map_screen.dart';
 import 'package:client_id/feature/main/ui/pages/ProlifePage/profile_page.dart';
 import 'package:client_id/feature/main/ui/pages/HomePage/user_home_screen.dart';
-import 'package:client_id/feature/main/ui/pages/FollowPage/test.dart';
 import 'package:flutter/material.dart';
 
 import '../../auth/domain/entities/user_entity/user_entity.dart';
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       DialogScreen(),
       const FriendsScreen(),
       ProfileScreen(),
-      Test(),
+      MapPage(),
     ];
   } // create constructor
 
@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite), label: "Friends"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Test"),
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
         ],
       ),
     );

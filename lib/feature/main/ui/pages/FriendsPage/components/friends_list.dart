@@ -1,4 +1,3 @@
-import 'package:client_id/feature/main/ui/pages/FriendsPage/components/user_item.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../../auth/domain/entities/user_entity/user_entity.dart';

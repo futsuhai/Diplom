@@ -6,6 +6,7 @@ part 'user_dto.g.dart';
 @JsonSerializable()
 class UserDto {
   final dynamic id;
+  final dynamic trueId;
   final dynamic username;
   final dynamic email;
   final dynamic description;
@@ -15,6 +16,7 @@ class UserDto {
 
   UserDto({
     this.id,
+    this.trueId,
     this.username,
     this.email,
     this.description,
@@ -35,6 +37,7 @@ class UserDto {
         image: image.toString(),
         username: username.toString(),
         id: id.toString(),
+        trueId: trueId.toString(),
         accessToken: accsessToken.toString(),
         refreshToken: refreshToken.toString());
   }

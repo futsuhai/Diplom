@@ -6,10 +6,15 @@ import '../../../../../../app/di/init_di.dart';
 import '../../../../../../app/domain/app_api.dart';
 
 class UserItem extends StatelessWidget {
-  UserItem({super.key, required this.userEntity});
+  UserItem({super.key, required this.userEntity, required this.getAllUsers});
 
   final AppApi appApi = locator.get<AppApi>();
   final UserEntity userEntity;
+  final Future<void> Function() getAllUsers;
+
+  void _handleButtonClick() async {
+    await getAllUsers();
+  }
 
   Future<void> _addFriend(String id) async {
     try {
@@ -19,25 +24,28 @@ class UserItem extends StatelessWidget {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         GestureDetector(
-          onTap: () {
+          onTap: () async {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => UserPage(userEntity: userEntity),
+                builder: (context) => UserPage(
+                  userEntity: userEntity,
+                ),
               ),
             );
           },
           child: Container(
             padding: const EdgeInsets.only(top: 14, bottom: 14, left: 8),
-            child:  CircleAvatar(
+            child: CircleAvatar(
               radius: 30,
-              backgroundImage: NetworkImage(
-                  userEntity.image),
+              backgroundImage: NetworkImage(userEntity.image),
             ),
           ),
         ),
@@ -78,6 +86,7 @@ class UserItem extends StatelessWidget {
           child: IconButton(
             onPressed: () {
               _addFriend(userEntity.id);
+              _handleButtonClick();
             },
             icon: const Icon(Icons.add),
             iconSize: 28,
